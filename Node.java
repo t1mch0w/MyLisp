@@ -18,6 +18,9 @@ public class Node {
 				subType = 1;
 			}
 		}
+		else {
+			subType = -1;
+		}
 	}
 
 	public Node(int type) {

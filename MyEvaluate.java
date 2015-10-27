@@ -40,7 +40,14 @@ public class MyEvaluate {
 		}
 		else if (n.getType()==5) {
 			if (CAR(n).getValue().equals("QUOTE")) {
-				return CDR(n);
+				if ((CDDR(n)!=null) && (CDDR(n).getValue().equals("NIL"))) {
+					return CDR(n);
+				}
+				else {
+					// Error info
+					System.out.println("ERROR: Wrong Number of Agruments, " + CAR(n).getValue());
+					System.exit(-1);
+				}
 			}
 			else if (CAR(n).getValue().equals("COND")) {
 				return evcon(CDR(n));
@@ -66,7 +73,7 @@ public class MyEvaluate {
 			System.out.println("ERROR: No Final Result in COND");
 			System.exit(-1);
 		}
-		else if (CDDR(CAR(x)).getValue().equals("NIL")) {
+		else if ((CDDR(CAR(x))!=null) && (CDDR(CAR(x)).getValue().equals("NIL"))) {
 			String y = (eval(CAAR(x))).getValue();
 			if (y.equals("T")) {
 				return eval(CADR(CAR(x)));
@@ -122,7 +129,7 @@ public class MyEvaluate {
 			}
 		}
 		else if (f.getValue().equals("CONS")) {
-			if (CDDR(x).getValue().equals("NIL")) {
+			if ((CDDR(x)!=null) && (CDDR(x).getValue().equals("NIL"))) {
 				Node newNode = new Node(5);
 				newNode.setLeft(CAR(x));
 				newNode.setRight(CADR(x));
@@ -135,7 +142,7 @@ public class MyEvaluate {
 			}
 		}
 		else if ((f.getValue().equals("ATOM")) || (f.getValue().equals("INT")) || (f.getValue().equals("NULL"))) {
-			if (CDR(x).getValue().equals("NIL")) {
+			if ((CDR(x)!=null) && (CDR(x).getValue().equals("NIL"))) {
 				if ((f.getValue().equals("ATOM") && (CAR(x).getType()==4))) {
 					return new Node(4,"T");
 				}
@@ -156,7 +163,7 @@ public class MyEvaluate {
 			}
 		}
 		else if ((f.getValue().equals("PLUS")) || (f.getValue().equals("MINUS")) || (f.getValue().equals("TIMES")) || (f.getValue().equals("QUOTIENT")) || (f.getValue().equals("REMAINDER")) || (f.getValue().equals("GREATER")) || (f.getValue().equals("LESS")) || (f.getValue().equals("EQ"))) {
-			if (CDDR(x).getValue().equals("NIL")) {
+			if ((CDDR(x)!=null) && (CDDR(x).getValue().equals("NIL"))) {
 				if ((CAR(x).getSubType()==0) && (CADR(x).getSubType()==0)) {
 					int result = 0;
 					String resultStr = "";

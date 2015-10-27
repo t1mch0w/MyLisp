@@ -16,8 +16,8 @@ public class MyParser {
 				error = 1;
 				break;
 			}
-			//Node newNode = me.eval(start);
-			Node newNode = start;
+			Node newNode = me.eval(start);
+			//Node newNode = start;
 			evaluate(newNode);
 			printer(newNode);
 			System.out.println();

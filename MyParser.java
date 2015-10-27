@@ -16,9 +16,10 @@ public class MyParser {
 				error = 1;
 				break;
 			}
-			me.startEval(start);
-			evaluate(start);
-			printer(start);
+			//me.eval(start);
+			Node newNode = me.eval(start);
+			evaluate(newNode);
+			printer(newNode);
 			System.out.println();
 		}
 		if (error!=0) {
@@ -32,6 +33,7 @@ public class MyParser {
 			System.out.print(n.getValue());
 		}
 		else if (n.getType() == 5) {
+			//if ((n.getList() == true) && (n.getPrintList())) {
 			if ((n.getList() == true) && (judge(n))) {
 				if ((n.hasLeft()) && (n.hasRight())) {
 					System.out.print("(");
@@ -98,15 +100,27 @@ public class MyParser {
 
 	public boolean judge(Node n) {
 		if (n.getType() == 5) {
-			return (n.getList() && judge(n.getLeft()) && judge(n.getRight()));
+			//return (n.getList() && judge(n.getLeft()) && judge(n.getRight()));
+			if (n.getLeft().getList() && n.getRight().getList()) {
+				return true;
 			}
-		return true;
+			return false;
+			}
+		else {
+			if (n.getValue().equals("NIL")) {
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
+	}
 	
 	public void evaluate(Node n) {
 		if (n.getType() == 4) {
 			if (n.getValue().equals("NIL")) {
-			n.setList(true);
+				n.setList(true);
+				n.setPrintList(true);
 			}
 		}
 		else {
@@ -116,6 +130,9 @@ public class MyParser {
 			  if (n.getRight().getList()) {
 			  	n.setList(true);
 			  }
+			  if ((n.getRight().getList()) && (n.getLeft().getList())) {
+			  	n.setPrintList(true);
+				}
 			}
 			else if (n.getLeft()!=null) {
 			  evaluate(n.getLeft());
@@ -133,7 +150,8 @@ public class MyParser {
 		}
 		if (token.getType() == 4) {
 			n.setValue(token.getValue());
-			n.setType(4);
+			n.setSubType(token.getSubType());
+			n.setType(token.getType());
 			return true;
 		}
 		else if (token.getType() == 1) {

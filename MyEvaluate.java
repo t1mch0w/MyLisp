@@ -27,165 +27,173 @@ public class MyEvaluate {
 		return n.getRight().getRight();
 	}
 
-	public boolean startEval(Node n) {
+	public Node eval(Node n) {
 		if (n.getType()==4) {
-			return true;
+			if ((n.getValue().equals("NIL")) || (n.getValue().equals("T")) || (n.getSubType() == 0)) {
+				return n;
+			}
+			else {
+			// Error info
+			System.out.println("ERROR: Unbound Literal " + n.getValue());
+			System.exit(-1);
+			}
 		}
 		else if (n.getType()==5) {
-			if (CAR(n).getType()==4) {
-				Node left = CAR(n);
-				Node right = CDR(n);
-				if ((left.getValue().equals("PLUS")) || (left.getValue().equals("MINUS")) || (left.getValue().equals("TIMES")) || (left.getValue().equals("QUOTIENT")) || (left.getValue().equals("REMAINDER"))) {
-					if (!CDDR(CDR(n)).getValue().equals("NIL")) {
-						// Error info
-						System.out.println("ERROR: " + left.getValue() + " with Wrong Number of Arguments.");
-						System.exit(-1);
-					}
-					leftArg = CADR(n);
-					rightArg = CADR(CDR(n));
-					startEval(leftArg);
-					startEval(rightArg);
-					int result;
-					if ((leftArg.getSubType()==0) && (rightArg.getSubType()==0)) {
-						switch (left.getValue()):
-							case "PLUS": result = leftArg.getIntValue() + irightArg.getIntValue();
-							case "MINUS": result = leftArg.getIntValue() - irightArg.getIntValue();
-							case "TIMES": result = leftArg.getIntValue() * irightArg.getIntValue();
-							case "QUOTIENT": result = leftArg.getIntValue() / irightArg.getIntValue();
-							case "REMAINDER": result = leftArg.getIntValue() % irightArg.getIntValue();
-					}
-					else {
-						// Error; Wrong Type;
-						System.out.println("ERROR: " + left.getValue() + " with Wrong Types of Arguments.");
-						System.exit(-1);
-					}
-					n.setValue(String.valueOf(result));
-					n.setLeft(null);
-					n.setRight(null);
-					n.setType(4);
-					n.setSubType(0);
+			if (CAR(n).getValue().equals("QUOTE")) {
+				return CDR(n);
+			}
+			else if (CAR(n).getValue().equals("COND")) {
+				return evcon(CDR(n));
+			}
+			else {
+				if (CDR(n).getType() == 5) {
+					return apply(CAR(n),evlist(CDR(n)));
 				}
-				else if ((left.getValue().equals("ATOM")) || (left.getValue().equals("INT")) || (left.getValue().equals("NULL"))) {
-					String result;
-					leftArg = CADR(n);
-					rightArg = CDDR(n);
-					if (rightArg.getValue.equals("NIL")) {
-						// Error info
-						System.out.println("ERROR: " + left.getValue() + " with Wrong Number of Arguments.");
-						System.exit(-1);
-					}
-					startEval(leftArg);
-					if ((leftArg.getType()==4) && (left.getValue().equals("ATOM"))) {
-						result="T";
-					}
-					else if ((leftArg.getSubType()==0) && (left.getValue().equals("INT"))) {
-						result="T";
-					}
-					else if ((leftArg.getValue().equals("NIL")) && (left.getValue().equals("NULL"))) {
-						result="T";
-					}
-					else {
-						result="NIL";
-					}
-					n.setValue(result);
-					n.setLeft(null);
-					n.setRight(null);
-					n.setType(4);
+				else {
+					// Error info
+					System.out.println("ERROR: Argument Is Not A List, " + CDR(n).getValue());
+					System.exit(-1);
 				}
-				else if ((left.getValue().equals("GREATER")) || (left.getValue().equals("LESS")) || (left.getValue().equals("EQUAL")))  {
-					String result;
-					if (!CDDR(n).getValue().equals("NIL")) {
-						// Error info
-						System.out.println("ERROR: " + left.getValue() + " with Wrong Number of Arguments.");
-						System.exit(-1);
-					}
-					leftArg = CADR(n);
-					rightArg = CADR(CDR(n));
-					startEval(leftArg);
-					startEval(rightArg);
-
-					if ((leftArg.getSubType()==0) && (rightArg.getSubType()==0)) {
-						switch (left.getValue()):
-							case "GREATER": result = leftArg.getIntValue()>rightArg.getIntValue()?T,NIL;
-							case "LESS": result = leftArg.getIntValue()<rightArg.getIntValue()?T,NIL;
-							case "EQUAL": result = leftArg.getIntValue()==rightArg.getIntValue()?T,NIL;
-					}
-					else {
-						// Error info
-						System.out.println("ERROR: " + left.getValue() + " with Wrong Number of Arguments.");
-						System.exit(-1);
-					}
-					n.setValue(result);
-					n.setLeft(null);
-					n.setRight(null);
-					n.setType(4);
-				}
-				else if (left.getValue().equals("CAR")) {
-
-					if ((right == 5) && (right.getLeft() != null)) {
-						n = right.getLeft();
-					}
-				}
-				else if (left.getValue().equals("CDR")) {
-					if ((right == 5) && (right.getRight() != null)) {
-						left = right.getRight();
-					}
-				}
-				else if (left.getValue().equals("CONS")) {
-					String result;
-					if ((right.getLeft() == null) || (right.getRight() == null)) {
-						// Error info
-					}
-					startEval(right.getLeft());
-					startEval(right.getRight());
-					n = right;
-				}
-				else if (left.getValue().equals("COND")) {
-					if (right.getLeft().getType() != 5) {
-						// Error info
-					}
-					Node condNode;
-					int stop = 0;
-					while (1) {
-						if ((right.getLeft()!=null) && (right.getRight()!=null)) {
-							if (right.getLeft().getLeft()!=5) {
-								condNode = right;
-								stop = 1;
-							}
-							condNode = right.getLeft();
-							startEval(condNode.getLeft());
-							if (condNode.getLeft().getValue().equals("T")) {
-								startEval(condNode.getRight());
-								n = condNode.getRight();
-								break;
-							}
-							else {
-								right = right.getRight();
-							}
-							if (stop == 1) {
-								n.setValue("NIL");
-								n.setLeft(null);
-								n.setRight(null);
-								n.setType(4);
-								break;
-							}
-						}
-						else {
-							// Error info
-						}
-					}
-				}
-				else if (left.getValue().equals("QUOTE")) {
-					if (!CDDR(n).getValue().equals("NIL")) {
-						// Error info
-						System.out.println("ERROR: " + left.getValue() + " with Wrong Number of Arguments.");
-						System.exit(-1);
-					}
-					else {
-						n = CADR(n);
-					}
-				}
+			}
 		}
-		return true;
+		return null;
+	}
+
+	// evcon function
+	public Node evcon (Node x) {
+		if (x.getValue().equals("NIL")) {
+			// Error info
+			System.out.println("ERROR: No Final Result in COND");
+			System.exit(-1);
+		}
+		else if (CDDR(CAR(x)).getValue().equals("NIL")) {
+			String y = (eval(CAAR(x))).getValue();
+			if (y.equals("T")) {
+				return eval(CADR(CAR(x)));
+			}
+			else if (y.equals("NIL")) {
+				return evcon(CDR(x));
+			}
+			else {
+				// Error info
+				System.out.println("ERROR: Wrong Condition, COND");
+				System.exit(-1);	
+			}
+		}
+		else {
+			// Error info
+			System.out.println("ERROR: Wrong Number of Arguments, COND");
+			System.exit(-1);			
+		}
+		return null;
+	}
+
+	public Node evlist (Node n) {
+		if (n.getValue().equals("NIL")) {
+			return n;
+		}
+		else {
+			Node newNode = new Node(5);
+			newNode.setLeft(eval(CAR(n)));
+			newNode.setRight(evlist(CDR(n)));
+			return newNode;
+		}
+	}
+
+	public Node apply(Node f, Node x) {
+		if ((f.getValue().equals("CAR")) || (f.getValue().equals("CDR"))) {
+			if (CDR(x).getValue().equals("NIL")) {
+				if ((CAAR(x)!=null) && (f.getValue().equals("CAR"))) {
+					return CAAR(x);
+				}
+				else if ((CDAR(x)!=null) && (f.getValue().equals("CDR"))) {
+					return CDAR(x);
+				}
+				else {
+					// Error info
+					System.out.println("ERROR: No Enough Arguments, " + f.getValue());
+					System.exit(-1);
+				}
+			}
+			else {
+				// Error info
+				System.out.println("ERROR: Wrong Number of Arguments," + f.getValue());
+				System.exit(-1);
+			}
+		}
+		else if (f.getValue().equals("CONS")) {
+			if (CDDR(x).getValue().equals("NIL")) {
+				Node newNode = new Node(5);
+				newNode.setLeft(CAR(x));
+				newNode.setRight(CADR(x));
+				return newNode;
+			}
+			else {
+				// Error info
+				System.out.println("ERROR: Wrong Number of Arguments," + f.getValue());
+				System.exit(-1);				
+			}
+		}
+		else if ((f.getValue().equals("ATOM")) || (f.getValue().equals("INT")) || (f.getValue().equals("NULL"))) {
+			if (CDR(x).getValue().equals("NIL")) {
+				if ((f.getValue().equals("ATOM") && (CAR(x).getType()==4))) {
+					return new Node(4,"T");
+				}
+				else if ((f.getValue().equals("INT") && (CAR(x).getSubType()==0))) {
+					return new Node(4,"T");
+				}
+				else if ((f.getValue().equals("NULL") && (CAR(x).getValue().equals("NIL")))) {
+					return new Node(4,"T");
+				}
+				else {
+					return new Node(4,"NIL");
+				}
+			}
+			else {
+				// Error info
+				System.out.println("ERROR: Wrong Number of Arguments," + f.getValue());
+				System.exit(-1);						
+			}
+		}
+		else if ((f.getValue().equals("PLUS")) || (f.getValue().equals("MINUS")) || (f.getValue().equals("TIMES")) || (f.getValue().equals("QUOTIENT")) || (f.getValue().equals("REMAINDER")) || (f.getValue().equals("GREATER")) || (f.getValue().equals("LESS")) || (f.getValue().equals("EQUAL"))) {
+			if (CDDR(x).getValue().equals("NIL")) {
+				if ((CAR(x).getSubType()==0) && (CADR(x).getSubType()==0)) {
+					int result = 0;
+					String resultStr = "";
+					switch (f.getValue()) {
+						case "PLUS": result = CAR(x).getIntValue() + CADR(x).getIntValue(); break;
+						case "MINUS": result = CAR(x).getIntValue() - CADR(x).getIntValue(); break;
+						case "TIMES": result = CAR(x).getIntValue() * CADR(x).getIntValue(); break;
+						case "QUOTIENT": result = CAR(x).getIntValue() / CADR(x).getIntValue(); break;
+						case "REMAINDER": result = CAR(x).getIntValue() % CADR(x).getIntValue(); break;
+						case "GREATER": resultStr = (CAR(x).getIntValue() > CADR(x).getIntValue())?"T":"NIL"; break;
+						case "LESS": resultStr = (CAR(x).getIntValue() < CADR(x).getIntValue())?"T":"NIL"; break;
+						case "EQUAL": resultStr = (CAR(x).getIntValue() == CADR(x).getIntValue())?"T":"NIL"; break;				
+					}
+					if (resultStr.equals("")) {
+						return new Node(4,String.valueOf(result));						
+					}
+					else {
+						return new Node(4, resultStr);
+					}
+				}
+				else {
+					// Error; Wrong Type;
+					System.out.println("ERROR: Wrong Types of Arguments, " + f.getValue());
+					System.exit(-1);					
+				}
+			}
+			else {
+				// Error info
+				System.out.println("ERROR: Wrong Number of Arguments, " + f.getValue());
+				System.exit(-1);				
+			}
+		}
+		else {
+			// Error info
+			System.out.println("ERROR: Wrong API, " + f.getValue());
+			System.exit(-1);				
+		}
+		return null;
 	}
 }

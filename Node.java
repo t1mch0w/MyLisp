@@ -5,6 +5,7 @@ public class Node {
 	private String value;
 	private String result;
 	private boolean isList = false;
+	private boolean printList = false;
 
 	public Node(int type, String value) {
 		this.type = type;
@@ -12,20 +13,22 @@ public class Node {
 		left = right = parent = null;
 		if (type == 4) {
 			if (isInteger(value)) {
-				subType = 0;
+				this.subType = 0;
 			}
 			else {
-				subType = 1;
+				this.subType = 1;
 			}
 		}
 		else {
-			subType = -1;
+			this.subType = -1;
 		}
 	}
 
 	public Node(int type) {
 		this.type = type;
+		this.subType = -1;
 		left = right = parent = null;
+		value = "";
 	}
 
 	public void setLeft(Node n) {
@@ -67,6 +70,16 @@ public class Node {
   public void setList(boolean isList) {
 		this.isList = isList;
 	}
+
+	public boolean getPrintList() {
+		return printList;
+	}
+
+  public void setPrintList(boolean printList) {
+		this.printList = printList;
+	}
+
+
 
 	public void setType(int type) {
 		this.type = type;

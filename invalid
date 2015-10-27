@@ -1,0 +1,8 @@
+(PLUS . (5 . 6))
+(PLUS . (X . Y))
+(EQ . (5 . (5 . 5)))
+(ATOM . 4)
+(ATOM . (X . NIL))
+(ATOM . (PLUS . ( 3 . (TIMES . ( 5 . (7. NIL))))))
+(COND . ((F . ((PLUS .(3 . (5. NIL))) . NIL)) . ((B1 . (E1 . NIL)) . NIL)))
+(COND . (((NULL.(3.NIL)) . ((PLUS .(3 . (5. NIL))) . NIL)) . (((INT.((QUOTIENT . (3 . (5. NIL))).NIL)) . (T . NIL)) . NIL)))

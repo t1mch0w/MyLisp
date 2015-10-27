@@ -16,8 +16,8 @@ public class MyParser {
 				error = 1;
 				break;
 			}
-			//me.eval(start);
-			Node newNode = me.eval(start);
+			//Node newNode = me.eval(start);
+			Node newNode = start;
 			evaluate(newNode);
 			printer(newNode);
 			System.out.println();
@@ -100,19 +100,10 @@ public class MyParser {
 
 	public boolean judge(Node n) {
 		if (n.getType() == 5) {
-			//return (n.getList() && judge(n.getLeft()) && judge(n.getRight()));
-			if (n.getLeft().getList() && n.getRight().getList()) {
-				return true;
-			}
-			return false;
-			}
+			return (n.getList() && judge(n.getLeft()) && judge(n.getRight()));
+		}
 		else {
-			if (n.getValue().equals("NIL")) {
-				return true;
-			}
-			else {
-				return false;
-			}
+			return true;
 		}
 	}
 	

@@ -39,9 +39,8 @@ public class MyEvaluate {
 			}
 		}
 		else if (n.getType()==5) {
-			if (CAR(n).getValue().equals("QUOTE")) {
-				if ((CDDR(n)!=null) && (CDDR(n).getValue().equals("NIL"))) {
-					return CDR(n);
+			if (CAR(n).getValue().equals("QUOTE")) { if ((CDDR(n)!=null) && (CDDR(n).getValue().equals("NIL"))) {
+					return CADR(n);
 				}
 				else {
 					// Error info
@@ -50,7 +49,21 @@ public class MyEvaluate {
 				}
 			}
 			else if (CAR(n).getValue().equals("COND")) {
-				return evcon(CDR(n));
+				if (CDR(n).getType()==5) {
+					if (checkDouble(CDR(n))) {
+						return evcon(CDR(n));
+					}
+					else {
+						// Error info
+						System.out.println("ERROR: Not Two Arguments in (B E) for COND");
+						System.exit(-1);
+					}
+				}
+				else {
+					// Error info
+					System.out.println("ERROR: Argument Is Not A List, " + CDR(n).getValue());
+					System.exit(-1);
+				}
 			}
 			else {
 				if (CDR(n).getType() == 5) {
@@ -64,6 +77,20 @@ public class MyEvaluate {
 			}
 		}
 		return null;
+	}
+
+	public boolean checkDouble(Node n) {
+		if (n.getValue().equals("NIL")) {
+			return true;
+		}
+		else {
+			if (((CAAR(n))!=null) && ((CADR(CAR(n)))!=null) && ((CDDR(CAR(n)))!=null) && (CDDR(CAR(n)).getValue().equals("NIL"))) {
+				return (true && checkDouble(CDR(n)));
+			}
+			else {
+				return false;
+			}
+		}
 	}
 
 	// evcon function

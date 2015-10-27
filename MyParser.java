@@ -19,7 +19,7 @@ public class MyParser {
 			Node newNode = me.eval(start);
 			//Node newNode = start;
 			evaluate(newNode);
-			printer(newNode);
+			printer(newNode, judge(newNode));
 			System.out.println();
 		}
 		if (error!=0) {
@@ -28,13 +28,12 @@ public class MyParser {
 		return true;
 	}
 
-	public void printer(Node n) {
+	public void printer(Node n, boolean kind) {
 		if (n.getType() == 4) {
 			System.out.print(n.getValue());
 		}
 		else if (n.getType() == 5) {
-			//if ((n.getList() == true) && (n.getPrintList())) {
-			if ((n.getList() == true) && (judge(n))) {
+			if ((n.getList() == true) && kind) {
 				if ((n.hasLeft()) && (n.hasRight())) {
 					System.out.print("(");
 					if (n.getLeft().getType() == 4) {
@@ -46,7 +45,7 @@ public class MyParser {
 						}
 					}
 					else {
-					  printer(n.getLeft());
+					  printer(n.getLeft(), kind);
 						if ((n.getRight().getType() == 4) && (n.getRight().getValue().equals("NIL"))) {
 						}
 						else {
@@ -64,7 +63,7 @@ public class MyParser {
 							}
   					}
   					else {
-  					  printer(n.getLeft());
+  					  printer(n.getLeft(),kind);
 							if ((n.getRight().getType() == 4) && (n.getRight().getValue().equals("NIL"))) {
 							}
 							else {
@@ -80,19 +79,19 @@ public class MyParser {
 					}
 				}
 				else {
-					printer(n.getLeft());
+					printer(n.getLeft(), kind);
 				}
 			}
 			else {
   			if ((n.hasLeft()) && (n.hasRight())) {
   				System.out.print("(");
-  				printer(n.getLeft());
+  				printer(n.getLeft(), kind);
   				System.out.print(" . ");
-  				printer(n.getRight());
+  				printer(n.getRight(), kind);
   				System.out.print(")");
   			}
   			else {
-  				printer(n.getLeft());
+  				printer(n.getLeft(), kind);
   			}
 			}
 		}
@@ -111,7 +110,6 @@ public class MyParser {
 		if (n.getType() == 4) {
 			if (n.getValue().equals("NIL")) {
 				n.setList(true);
-				n.setPrintList(true);
 			}
 		}
 		else {
@@ -122,7 +120,6 @@ public class MyParser {
 			  	n.setList(true);
 			  }
 			  if ((n.getRight().getList()) && (n.getLeft().getList())) {
-			  	n.setPrintList(true);
 				}
 			}
 			else if (n.getLeft()!=null) {

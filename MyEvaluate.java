@@ -128,7 +128,17 @@ public class MyEvaluate {
 		}
 		else {
 			Node newNode = new Node(5);
+			if (CAR(n)==null) {
+				// Error info
+				System.out.println("ERROR: eval Input Is Invalid.");
+				System.exit(-1);			
+			}
 			newNode.setLeft(eval(CAR(n)));
+			if (CDR(n)==null) {
+				// Error info
+				System.out.println("ERROR: evList Input Is Invalid.");
+				System.exit(-1);			
+			}
 			newNode.setRight(evlist(CDR(n)));
 			return newNode;
 		}
@@ -189,7 +199,26 @@ public class MyEvaluate {
 				System.exit(-1);						
 			}
 		}
-		else if ((f.getValue().equals("PLUS")) || (f.getValue().equals("MINUS")) || (f.getValue().equals("TIMES")) || (f.getValue().equals("QUOTIENT")) || (f.getValue().equals("REMAINDER")) || (f.getValue().equals("GREATER")) || (f.getValue().equals("LESS")) || (f.getValue().equals("EQ"))) {
+		else if (f.getValue().equals("EQ")) {
+			if ((CDDR(x)!=null) && (CDDR(x).getValue().equals("NIL"))) {
+				if ((CAR(x).getType()==4) && (CADR(x).getType()==4)) {
+					int result = 0;
+					String resultStr = (CAR(x).getValue().equals(CADR(x).getValue()))?"T":"NIL";
+					return new Node(4, resultStr);
+				}
+				else {
+					// Error; Wrong Type;
+					System.out.println("ERROR: Wrong Types of Arguments, " + f.getValue());
+					System.exit(-1);					
+				}
+			}
+			else {
+				// Error info
+				System.out.println("ERROR: Wrong Number of Arguments, " + f.getValue());
+				System.exit(-1);				
+			}
+		}
+		else if ((f.getValue().equals("PLUS")) || (f.getValue().equals("MINUS")) || (f.getValue().equals("TIMES")) || (f.getValue().equals("QUOTIENT")) || (f.getValue().equals("REMAINDER")) || (f.getValue().equals("GREATER")) || (f.getValue().equals("LESS"))) {
 			if ((CDDR(x)!=null) && (CDDR(x).getValue().equals("NIL"))) {
 				if ((CAR(x).getSubType()==0) && (CADR(x).getSubType()==0)) {
 					int result = 0;
@@ -202,7 +231,6 @@ public class MyEvaluate {
 						case "REMAINDER": result = CAR(x).getIntValue() % CADR(x).getIntValue(); break;
 						case "GREATER": resultStr = (CAR(x).getIntValue() > CADR(x).getIntValue())?"T":"NIL"; break;
 						case "LESS": resultStr = (CAR(x).getIntValue() < CADR(x).getIntValue())?"T":"NIL"; break;
-						case "EQ": resultStr = (CAR(x).getIntValue() == CADR(x).getIntValue())?"T":"NIL"; break;				
 					}
 					if (resultStr.equals("")) {
 						return new Node(4,String.valueOf(result));						

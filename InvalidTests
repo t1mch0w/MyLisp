@@ -12,3 +12,4 @@
 (ATOM .( (5.NIL).NIL))
 (CONS . ((CAR . ((QUOTE . (A.NIL)).NIL)) . ((QUOTE . (B.NIL)) . NIL)))
 (COND . ((NIL . (T . NIL)) . ((NIL . (T . NIL)) . NIL)))
+(CONS . (88 . (99 . (NIL . NIL))))

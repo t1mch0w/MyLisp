@@ -3,6 +3,20 @@ public class MyEvaluate {
 	public MyEvaluate() {
 	}
 
+	public boolean bound(Node x, Map a) {
+		return a.containsKey(x);
+	}
+
+	public Node getval(Node x, Map a) {
+		return a.get(x);
+	}
+
+	public void addpairs(Node x, Node y, Map z) {
+		//Error check
+		for (;
+
+	}
+
   public Node CAR(Node n) {
   	return n.getLeft();
 	}
@@ -27,10 +41,13 @@ public class MyEvaluate {
 		return n.getRight().getRight();
 	}
 
-	public Node eval(Node n) {
+	public Node eval(Node n, Map a, Map d) {
 		if (n.getType()==4) {
 			if ((n.getValue().equals("NIL")) || (n.getValue().equals("T")) || (n.getSubType() == 0)) {
 				return n;
+			}
+			else if (bound(n, a)) {
+				return new Node(4, getevl(n, a));
 			}
 			else {
 			// Error info
@@ -39,7 +56,8 @@ public class MyEvaluate {
 			}
 		}
 		else if (n.getType()==5) {
-			if (CAR(n).getValue().equals("QUOTE")) { if ((CDDR(n)!=null) && (CDDR(n).getValue().equals("NIL"))) {
+			if (CAR(n).getValue().equals("QUOTE")) { 
+				if ((CDDR(n)!=null) && (CDDR(n).getValue().equals("NIL"))) {
 					return CADR(n);
 				}
 				else {
@@ -51,7 +69,7 @@ public class MyEvaluate {
 			else if (CAR(n).getValue().equals("COND")) {
 				if (CDR(n).getType()==5) {
 					if (checkDouble(CDR(n))) {
-						return evcon(CDR(n));
+						return evcon(CDR(n), a, d);
 					}
 					else {
 						// Error info
@@ -65,9 +83,19 @@ public class MyEvaluate {
 					System.exit(-1);
 				}
 			}
+			else if (CAR(n).getValue().equals("DEFUN")) {
+				if (CDDR(CDDR(n)).getType()==5) {
+					d.put(CDR(n), CDDR(n));
+				}
+				else {
+					// Error info
+					System.out.println("ERROR: Not Two Arguments in (B E) for COND");
+					System.exit(-1);
+				}
+			}
 			else {
 				if (CDR(n).getType() == 5) {
-					return apply(CAR(n),evlist(CDR(n)));
+					return apply(CAR(n),evlist(CDR(n), a, d), a, d);
 				}
 				else {
 					// Error info
@@ -94,19 +122,19 @@ public class MyEvaluate {
 	}
 
 	// evcon function
-	public Node evcon (Node x) {
+	public Node evcon (Node x, Map a, Map d) {
 		if (x.getValue().equals("NIL")) {
 			// Error info
 			System.out.println("ERROR: No Final Result in COND");
 			System.exit(-1);
 		}
 		else if ((CDDR(CAR(x))!=null) && (CDDR(CAR(x)).getValue().equals("NIL"))) {
-			String y = (eval(CAAR(x))).getValue();
+			String y = (eval(CAAR(x), a, d)).getValue();
 			if (y.equals("T")) {
-				return eval(CADR(CAR(x)));
+				return eval(CADR(CAR(x)), a, d);
 			}
 			else if (y.equals("NIL")) {
-				return evcon(CDR(x));
+				return evcon(CDR(x), a, d);
 			}
 			else {
 				// Error info
@@ -122,7 +150,7 @@ public class MyEvaluate {
 		return null;
 	}
 
-	public Node evlist (Node n) {
+	public Node evlist (Node n, Map a, Map d) {
 		if (n.getValue().equals("NIL")) {
 			return n;
 		}
@@ -133,18 +161,18 @@ public class MyEvaluate {
 				System.out.println("ERROR: eval Input Is Invalid.");
 				System.exit(-1);			
 			}
-			newNode.setLeft(eval(CAR(n)));
+			newNode.setLeft(eval(CAR(n), a, d));
 			if (CDR(n)==null) {
 				// Error info
 				System.out.println("ERROR: evList Input Is Invalid.");
 				System.exit(-1);			
 			}
-			newNode.setRight(evlist(CDR(n)));
+			newNode.setRight(evlist(CDR(n), a, d));
 			return newNode;
 		}
 	}
 
-	public Node apply(Node f, Node x) {
+	public Node apply(Node f, Node x, Map a, Map d) {
 		if ((f.getValue().equals("CAR")) || (f.getValue().equals("CDR"))) {
 			if (CDR(x).getValue().equals("NIL")) {
 				if ((CAAR(x)!=null) && (f.getValue().equals("CAR"))) {
@@ -252,10 +280,14 @@ public class MyEvaluate {
 			}
 		}
 		else {
-			// Error info
-			System.out.println("ERROR: Wrong API, " + f.getValue());
-			System.exit(-1);				
+			addpairs(CAR(getval(f,d)), x, a);
+			return eval(CDR(getval(f,d)), a, d);
 		}
+		//else {
+		//	// Error info
+		//	System.out.println("ERROR: Wrong API, " + f.getValue());
+		//	System.exit(-1);				
+		//}
 		return null;
 	}
 }

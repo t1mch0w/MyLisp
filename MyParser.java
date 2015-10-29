@@ -3,6 +3,8 @@ public class MyParser {
 	private MyEvaluate me;
 	private int pos = 0;
 	private int error = 0;
+	private Map a;
+	private Map d;
 
 	public MyParser(MyScanner ms, MyEvaluate me) {
 		this.ms = ms;
@@ -10,13 +12,15 @@ public class MyParser {
 	}
 
 	public boolean parseStart() {
+		d = new HashMap();
 		while (ms.hasNext()) {
 			Node start = new Node(5);
 			if (!parseSexp(start)) {
 				error = 1;
 				break;
 			}
-			Node newNode = me.eval(start);
+			a = new HashMap();
+			Node newNode = me.eval(start, a, d);
 			//Node newNode = start;
 			evaluate(newNode);
 			printer(newNode, judge(newNode));

@@ -1,10 +1,12 @@
+import java.util.*;
+
 public class MyParser {
 	private MyScanner ms;
 	private MyEvaluate me;
 	private int pos = 0;
 	private int error = 0;
-	private Map a;
-	private Map d;
+	private Map<String, Node> a;
+	private Map<String, Node> d;
 
 	public MyParser(MyScanner ms, MyEvaluate me) {
 		this.ms = ms;
@@ -12,14 +14,14 @@ public class MyParser {
 	}
 
 	public boolean parseStart() {
-		d = new HashMap();
+		d = new HashMap<String, Node>();
 		while (ms.hasNext()) {
 			Node start = new Node(5);
 			if (!parseSexp(start)) {
 				error = 1;
 				break;
 			}
-			a = new HashMap();
+			a = new HashMap<String, Node>();
 			Node newNode = me.eval(start, a, d);
 			//Node newNode = start;
 			evaluate(newNode);

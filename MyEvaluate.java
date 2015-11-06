@@ -13,7 +13,7 @@ public class MyEvaluate {
 		return (Node)(a.get(x.getValue()));
 	}
 
-	public void addpairs(Node x, Node y, Map<String, Node> z) {
+	public Map<String, Node> addpairs(Node x, Node y, Map<String, Node> z) {
 		while ((x!=null) && (y!=null)) {
 			if ((x.getType()==4) && (y.getType()==4)) {
 				if ((x.getValue().equals("NIL")) && (y.getValue().equals("NIL"))) {
@@ -31,25 +31,24 @@ public class MyEvaluate {
 				System.exit(-1);
 			}
 
-			if ((CAR(x).getType()==4) && (CAR(y).getType()==4)) {
-				if (bound(CAR(x), z)) {
+			if (bound(CAR(x), z)) {
+				// Error
+				System.out.println("ERROR: Same Literal Agruments in DEFUN");
+				System.exit(-1);
+			}
+			else {
+				if ((CAR(x)==null) || (CAR(y)==null)) {
 					// Error
-					System.out.println("ERROR: Same Literal Agruments in DEFUN");
+					System.out.println("ERROR: Wrong Number of Agruments in DEFUN");
 					System.exit(-1);
 				}
-				else {
-					if ((CAR(x)==null) || (CAR(y)==null)) {
-						// Error
-						System.out.println("ERROR: Wrong Number of Agruments in DEFUN");
-						System.exit(-1);
-					}
-					z.put(CAR(x).getValue(),CAR(y));
-					x = CDR(x);
-					y = CDR(y);
-					continue;
-				}
+				z.put(CAR(x).getValue(),CAR(y));
+				x = CDR(x);
+				y = CDR(y);
+				continue;
 			}
 		}
+		return z;
 	}
 
   public Node CAR(Node n) {
@@ -82,7 +81,12 @@ public class MyEvaluate {
 				return n;
 			}
 			else if (bound(n, a)) {
-				return new Node(4, getval(n, a).getValue());
+				if (getval(n,a).getType()==4) {
+					return new Node(4, getval(n, a).getValue());
+				}
+				else {
+					return getval(n, a);
+				}
 			}
 			else {
 			// Error info
@@ -145,7 +149,7 @@ public class MyEvaluate {
 				}
 				else {
 					// Error info
-					System.out.println("ERROR: Argument Is Not A List, " + CDR(n).getValue());
+					System.out.println("ERROR: Argument Is Not A List, " + CAR(n).getValue());
 					System.exit(-1);
 				}
 			}
@@ -331,13 +335,17 @@ public class MyEvaluate {
 				System.out.println("ERROR: Wrong Number of Arguments, " + f.getValue());
 				System.exit(-1);				
 			}
-			if (!checkAtom(x)) {
+			//if (!checkAtom(x)) {
+			if (false) {
 				// Error info
-				System.out.println("ERROR: Wrong Type of Arguments, " + f.getValue());
+				System.out.println("ERROR: Wrong Types of Arguments, " + f.getValue());
 				System.exit(-1);				
 			}
-			addpairs(CAR(getval(f,d)), x, a);
-			return eval(CADR(getval(f,d)), a, d);
+			//addpairs(CAR(getval(f,d)), x, a);
+			//return eval(CADR(getval(f,d)), a, d);
+			//return eval(CDR(getval(f,d)), addpairs(CAR(getval(f,d)), x, a), d);
+			a = new HashMap<String, Node>();
+			return eval(CADR(getval(f,d)), addpairs(CAR(getval(f,d)), x, a), d);
 		}
 		return null;
 	}

@@ -1,4 +1,4 @@
-CSE 6341 Project 2
+CSE 6341 Project 3
 
 1. Name: Fang Zhou
 
@@ -21,7 +21,8 @@ CSE 6341 Project 2
   D. Project.java: Project class contains the main function of the
      project. It also creates some instances of MyParser and MyScanner
      classes.
-	E. MyEvaluate.java: This is the Evaluate function in Project 2. This
+	E. MyEvaluate.java: This is the Evaluate function in Project 3. This
 		 is a class that can be revoked to evalute semantics starting from
 		 a Node class. There is a function 'eval' that returns the result
-		 in a format of Node class.
+		 in a format of Node class. In this project, I add some code for
+		 DEFUN and a lot of checks for completeness.

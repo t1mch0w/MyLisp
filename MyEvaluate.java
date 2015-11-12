@@ -2,6 +2,8 @@ import java.util.*;
 
 public class MyEvaluate {
 
+	ArrayList<String> p2list = new ArrayList<String>(Arrays.asList("T", "NIL", "CAR", "CDR", "CONS", "ATOM", "EQ", "NULL", "INT", "PLUS", "MINUS", "TIMES", "QUOTIENT", "REMAINDER", "LESS", "GREATER", "COND", "QUOTE"));
+
 	public MyEvaluate() {
 	}
 
@@ -123,11 +125,23 @@ public class MyEvaluate {
 				}
 			}
 			else if (CAR(n).getValue().equals("DEFUN")) {
-				if ((CDDR(CDDR(n))==null) || (CADR(n)==null) || (CDDR(n)==null) || (CADR(n).getType()!=4)) {
+				if ((CDDR(CDDR(n))==null) || (CADR(n)==null) || (CDDR(n)==null) || (CADR(n).getType()!=4) || (CADR(n).getSubType()==0)) {
 					// Error info
 					System.out.println("ERROR: Wrong Arguments in DEFUN");
 					System.exit(-1);
 				}
+				else if (p2list.contains(CADR(n).getValue())) {
+					// Error info
+					System.out.println("ERROR: Keywords in Function Name, " + CADR(n).getValue());
+					System.exit(-1);
+				}
+				/*
+				else if (bound(CADR(n),d)) {
+					// Error info
+					System.out.println("ERROR: Used Function Name, " + CADR(n).getValue());
+					System.exit(-1);
+				}
+				*/
 				if (CDDR(CDDR(n)).getValue().equals("NIL")) {
 					if (!checkAtom(CAR(CDDR(n)))) {
 						// Error info
@@ -335,15 +349,6 @@ public class MyEvaluate {
 				System.out.println("ERROR: Wrong Number of Arguments, " + f.getValue());
 				System.exit(-1);				
 			}
-			//if (!checkAtom(x)) {
-			if (false) {
-				// Error info
-				System.out.println("ERROR: Wrong Types of Arguments, " + f.getValue());
-				System.exit(-1);				
-			}
-			//addpairs(CAR(getval(f,d)), x, a);
-			//return eval(CADR(getval(f,d)), a, d);
-			//return eval(CDR(getval(f,d)), addpairs(CAR(getval(f,d)), x, a), d);
 			a = new HashMap<String, Node>();
 			return eval(CADR(getval(f,d)), addpairs(CAR(getval(f,d)), x, a), d);
 		}
@@ -352,14 +357,22 @@ public class MyEvaluate {
 
 	public boolean checkAtom(Node n) {
 		while (n!=null) {
-			if (CAR(n).getType()!=4) {
-				return false;
+			if (n.getType()==4) {
+				if (n.getValue().equals("NIL")) {
+					return true;
+				}
+				else {
+					return false;
+				}
 			}
-			if (CDR(n).getValue().equals("NIL")) {
-				break;
+			else {
+				if (CAR(n).getType()!=4) {
+					return false;
+				}
+				n = CDR(n);
 			}
-			n = CDR(n);
 		}
 		return true;
 	}
+
 }

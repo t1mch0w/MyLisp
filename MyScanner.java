@@ -163,16 +163,25 @@ public class MyScanner {
 		// Start Loop for Type Evaluate
 		else {
 			if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("CAR"))) {
-				if (typeCheck(CAR(CDR(n))) && (typeCheck(CDR(CDR(n))))) {
-					if (CAR(n).getNat()==2
-					n.setNat(0);
+				if (typeCheck(CADR(n)) && (typeCheck(CDDR(n))))) {
+					if (checkList(CADR(n))) {
+						n.setNat(0);
+					}
+					else {
+						// Error Information
+					}
 				}
 				else {
 				}
 			}
 			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("CDR"))) {
 				if (typeCheck(CAR(CDR(n))) && (typeCheck(CDR(CDR(n))))) {
-					n.setNat(2);
+					if ((CADR(n).getNat()==0) && (checkList(CAR(CDDR(n))))) {
+						n.setNat(2);
+					}
+					else {
+						// Error Information
+					}
 				}
 				else {
 				}
@@ -193,17 +202,21 @@ public class MyScanner {
 			}
 			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("EQ"))) {
 				if (typeCheck(CAR(CDR(n))) && (typeCheck(CDR(CDR(n))))) {
-					n.setNat(1);
-				}
-				else {
-				}
+					if ((CADR(n).getNat()==0) && (CAR(CDDR(n).getNat()==0))) {
+						n.setNat(1);
+					}
+					else {
+						// Error Information
+					}
 			}
 			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("NULL"))) {
 				if (typeCheck(CAR(CDR(n))) && (typeCheck(CDR(CDR(n))))) {
-					n.setNat(1);
-				}
-				else {
-				}
+					if (checkList(CADR(n)) {
+						n.setNat(1);
+					}
+					else {
+						// Error Information
+					}
 			}
 			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("INT"))) {
 				if (typeCheck(CAR(CDR(n))) && (typeCheck(CDR(CDR(n))))) {
@@ -213,22 +226,28 @@ public class MyScanner {
 				}
 			}
 			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("PLUS"))) {
-				if (typeCheck(CAR(CDR(n))) && (typeCheck(CDR(CDR(n))))) {
+				if ((CADR(n).getNat()==0) && (CAR(CDDR(n).getNat()==0))) {
 					n.setNat(0);
 				}
 				else {
+					// Error Information
 				}
 			}
 			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("LESS"))) {
-				if (typeCheck(CAR(CDR(n))) && (typeCheck(CDR(CDR(n))))) {
+				if ((CADR(n).getNat()==0) && (CAR(CDDR(n).getNat()==0))) {
 					n.setNat(1);
 				}
 				else {
+					// Error Information
 				}
 			}
 			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("COND"))) {
 				if (typeCheck(CAR(CDR(n))) && (typeCheck(CDR(CDR(n))))) {
-					n.setNat(0);
+					if (checkCond(CDR(n))) {
+						n.setNat(CADR(CADR(n)).getNat());
+					}
+					else {
+					}
 				}
 				else {
 				}
@@ -240,7 +259,48 @@ public class MyScanner {
 		}
 	}
 
-	public boolean isNatList(Node n) {
-		if 
+	public boolean checkList(Node n) {
+		if (n.getType()==4) {
+			if (n.getNat()==2) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		while (!n.getValue().equals("NIL")) {
+			if (CDR(n)!=null) {
+				if (CAR(n).getNat()!=0) {
+					return false;
+				}
+				n=CDR(n);
+			}
+			else {
+				//Error Information
+			}
+		}
+		return true;
+	}
+
+	public boolean checkCond(Node n) {
+		int s1 = CAR(CADR(n)).getNat();
+		int s2 = CADR(CADR(n)).getNat();
+		if (s1!=1) {
+			return false;
+		}
+		Node m = new Node();
+		
+		while (!n.getValue().equals("NIL")) {
+			m = CDR(n);	
+			int s3 = CAR(CADR(m)).getNat();
+			int s4 = CADR(CADR(m)).getNat();
+			if ((s1==s3) && (s2 == s4)) {
+			}
+			else {
+				return false;
+			}
+			n = CDR(n);
+		}
+		return false;
 	}
 }

@@ -23,25 +23,25 @@ public class MyEvaluate {
 				}
 				else {
 					// Error
-					System.out.println("ERROR: Wrong Number of Agruments in DEFUN");
+					System.out.println("ERROR: Wrong Number of Agruments in a-list & d-list");
 					System.exit(-1);
 				}
 			}
-			else if (((CDR(x).getType()==4) && (CDR(y).getType()==5)) || ((CDR(x).getType()==5) && (CDR(y).getType()==4)))  {
+			else if ((CDR(y)==null) || (CDR(x)==null) || ((CDR(x).getType()==4) && (CDR(y).getType()==5)) || ((CDR(x).getType()==5) && (CDR(y).getType()==4)))  {
 				// Error
-				System.out.println("ERROR: Wrong Number of Agruments in DEFUN");
+				System.out.println("ERROR: Wrong Number of Agruments in a-list & d-list");
 				System.exit(-1);
 			}
 
-			if (bound(CAR(x), z)) {
+			if ((CAR(x)==null) || bound(CAR(x), z)) {
 				// Error
-				System.out.println("ERROR: Same Literal Agruments in DEFUN");
+				System.out.println("ERROR: Same Literal Agruments in a-list & d-list");
 				System.exit(-1);
 			}
 			else {
 				if ((CAR(x)==null) || (CAR(y)==null)) {
 					// Error
-					System.out.println("ERROR: Wrong Number of Agruments in DEFUN");
+					System.out.println("ERROR: Wrong Number of Agruments in a-list & d-list");
 					System.exit(-1);
 				}
 				z.put(CAR(x).getValue(),CAR(y));
@@ -125,7 +125,7 @@ public class MyEvaluate {
 				}
 			}
 			else if (CAR(n).getValue().equals("DEFUN")) {
-				if ((CDDR(CDDR(n))==null) || (CADR(n)==null) || (CDDR(n)==null) || (CADR(n).getType()!=4) || (CADR(n).getSubType()==0)) {
+				if ((CDR(n)==null) || (CDDR(n)==null) || (CDR(CDDR(n))==null) || (CDDR(CDDR(n))==null) || (CAR(CDDR(n))==null) || (CADR(n)==null) || (CADR(CDDR(n))==null) || (CADR(n).getType()!=4) || (CADR(n).getSubType()==0)) {
 					// Error info
 					System.out.println("ERROR: Wrong Arguments in DEFUN");
 					System.exit(-1);
@@ -135,13 +135,6 @@ public class MyEvaluate {
 					System.out.println("ERROR: Keywords in Function Name, " + CADR(n).getValue());
 					System.exit(-1);
 				}
-				/*
-				else if (bound(CADR(n),d)) {
-					// Error info
-					System.out.println("ERROR: Used Function Name, " + CADR(n).getValue());
-					System.exit(-1);
-				}
-				*/
 				if (CDDR(CDDR(n)).getValue().equals("NIL")) {
 					if (!checkAtom(CAR(CDDR(n)))) {
 						// Error info
@@ -158,6 +151,8 @@ public class MyEvaluate {
 				}
 			}
 			else {
+					return apply(CAR(n),evlist(CDR(n), a, d), a, d);
+					/*
 				if (CDR(n).getType() == 5) {
 					return apply(CAR(n),evlist(CDR(n), a, d), a, d);
 				}
@@ -166,6 +161,7 @@ public class MyEvaluate {
 					System.out.println("ERROR: Argument Is Not A List, " + CAR(n).getValue());
 					System.exit(-1);
 				}
+				*/
 			}
 		}
 		return null;
@@ -344,7 +340,7 @@ public class MyEvaluate {
 			}
 		}
 		else {
-			if ((CAR(getval(f,d))==null) || (CADR(getval(f,d))==null) || (CDDR(getval(f,d))==null) || (!CDDR(getval(f,d)).getValue().equals("NIL"))) {
+			if ((getval(f,d)==null) || (CDR(getval(f,d))==null) || (CAR(getval(f,d))==null) || (CADR(getval(f,d))==null) || (CDDR(getval(f,d))==null) || (!CDDR(getval(f,d)).getValue().equals("NIL"))) {
 				// Error info
 				System.out.println("ERROR: Wrong Number of Arguments, " + f.getValue());
 				System.exit(-1);				
@@ -356,6 +352,7 @@ public class MyEvaluate {
 	}
 
 	public boolean checkAtom(Node n) {
+		ArrayList<String> checkList = new ArrayList<String>();
 		while (n!=null) {
 			if (n.getType()==4) {
 				if (n.getValue().equals("NIL")) {
@@ -369,6 +366,16 @@ public class MyEvaluate {
 				if (CAR(n).getType()!=4) {
 					return false;
 				}
+				if (CAR(n).getSubType()==0) {
+					return false;
+				}
+				if (checkList.contains(CAR(n).getValue())) {
+					return false;
+				}
+				if (p2list.contains(CAR(n).getValue())) {
+					return false;
+				}
+				checkList.add(CAR(n).getValue());
 				n = CDR(n);
 			}
 		}

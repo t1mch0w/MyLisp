@@ -163,7 +163,7 @@ public class MyScanner {
 		// Start Loop for Type Evaluate
 		else {
 			if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("CAR"))) {
-				if (typeCheck(CADR(n)) && (typeCheck(CDDR(n))))) {
+				if (typeCheck(CDR(n))) {
 					if (checkList(CADR(n))) {
 						n.setNat(0);
 					}
@@ -175,7 +175,7 @@ public class MyScanner {
 				}
 			}
 			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("CDR"))) {
-				if (typeCheck(CAR(CDR(n))) && (typeCheck(CDR(CDR(n))))) {
+				if (typeCheck(CDR(n))) {
 					if ((CADR(n).getNat()==0) && (checkList(CAR(CDDR(n))))) {
 						n.setNat(2);
 					}
@@ -187,62 +187,82 @@ public class MyScanner {
 				}
 			}
 			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("CONS"))) {
-				if (typeCheck(CAR(CDR(n))) && (typeCheck(CDR(CDR(n))))) {
+				if (typeCheck(CDR(n))) {
 					n.setNat(2);
 				}
 				else {
 				}
 			}
 			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("ATOM"))) {
-				if (typeCheck(CAR(CDR(n))) && (typeCheck(CDR(CDR(n))))) {
+				if (typeCheck(CDR(n))) {
 					n.setNat(1);
 				}
 				else {
 				}
 			}
 			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("EQ"))) {
-				if (typeCheck(CAR(CDR(n))) && (typeCheck(CDR(CDR(n))))) {
-					if ((CADR(n).getNat()==0) && (CAR(CDDR(n).getNat()==0))) {
+				if (typeCheck(CDR(n))) {
+					if ((CADR(n).getNat()==0) && (CAR(CDDR(n)).getNat()==0)) {
 						n.setNat(1);
 					}
 					else {
 						// Error Information
 					}
+				}
 			}
 			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("NULL"))) {
-				if (typeCheck(CAR(CDR(n))) && (typeCheck(CDR(CDR(n))))) {
-					if (checkList(CADR(n)) {
+				if (typeCheck(CDR(n))) {
+					if (checkList(CADR(n))) {
 						n.setNat(1);
 					}
 					else {
 						// Error Information
 					}
+				}
 			}
 			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("INT"))) {
-				if (typeCheck(CAR(CDR(n))) && (typeCheck(CDR(CDR(n))))) {
+				if (typeCheck(CDR(n))) {
+					if (checkList(CADR(n))) {
+						n.setNat(1);
+					}
+					else {
+						// Error Information
+					}
+				}
+			}
+			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("INT"))) {
+				if (typeCheck(CDR(n))) {
 					n.setNat(1);
 				}
 				else {
 				}
 			}
 			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("PLUS"))) {
-				if ((CADR(n).getNat()==0) && (CAR(CDDR(n).getNat()==0))) {
-					n.setNat(0);
+				if (typeCheck(CDR(n))) {
+					if ((CADR(n).getNat()==0) && (CAR(CDDR(n)).getNat()==0)) {
+						n.setNat(0);
+					}
+					else {
+						// Error Information
+					}
 				}
 				else {
-					// Error Information
 				}
 			}
 			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("LESS"))) {
-				if ((CADR(n).getNat()==0) && (CAR(CDDR(n).getNat()==0))) {
-					n.setNat(1);
+				if (typeCheck(CDR(n))) {
+					if ((CADR(n).getNat()==0) && (CAR(CDDR(n)).getNat()==0)) {
+						n.setNat(1);
+					}
+					else {
+						// Error Information
+					}
 				}
 				else {
-					// Error Information
 				}
 			}
 			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("COND"))) {
-				if (typeCheck(CAR(CDR(n))) && (typeCheck(CDR(CDR(n))))) {
+				if (typeCheck(CDR(n))) {
 					if (checkCond(CDR(n))) {
 						n.setNat(CADR(CADR(n)).getNat());
 					}
@@ -257,6 +277,7 @@ public class MyScanner {
 				typeCheck(CDR(CDR(n)));
 			}
 		}
+		return true;
 	}
 
 	public boolean checkList(Node n) {
@@ -288,7 +309,7 @@ public class MyScanner {
 		if (s1!=1) {
 			return false;
 		}
-		Node m = new Node();
+		Node m = new Node(0);
 		
 		while (!n.getValue().equals("NIL")) {
 			m = CDR(n);	
@@ -303,4 +324,30 @@ public class MyScanner {
 		}
 		return false;
 	}
+
+
+	public Node CAR(Node n) {
+		return n.getLeft();
+	}
+	
+	public Node CDR(Node n) {
+		return n.getRight();
+	}
+	
+	public Node CAAR(Node n) {
+		return n.getLeft().getLeft();
+	}
+	
+	public Node CADR(Node n) {
+		return n.getRight().getLeft();
+	}
+	
+	public Node CDAR(Node n) {
+		return n.getLeft().getRight();
+	}
+	
+	public Node CDDR(Node n) {
+		return n.getRight().getRight();
+	}
 }
+

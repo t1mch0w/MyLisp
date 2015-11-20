@@ -13,7 +13,7 @@ JAVAFLAGS = -g
 COMPILE = $(JAVAC) $(JAVAFLAGS)
 #
 # # One of these should be the "main" class listed in Runfile
-CLASS_FILES = Node.class MyEvaluate.class MyScanner.class MyParser.class Project.class 
+CLASS_FILES = Node.class MyScanner.class MyEvaluate.class MyParser.class Project.class 
 #
 # # The first target is the one that is executed when you invoke
 # # "make". 

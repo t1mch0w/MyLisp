@@ -53,30 +53,6 @@ public class MyEvaluate {
 		return z;
 	}
 
-  public Node CAR(Node n) {
-  	return n.getLeft();
-	}
-
-	public Node CDR(Node n) {
-		return n.getRight();
-	}
-
-	public Node CAAR(Node n) {
-		return n.getLeft().getLeft();
-	}
-
-	public Node CADR(Node n) {
-		return n.getRight().getLeft();
-	}
-
-	public Node CDAR(Node n) {
-		return n.getLeft().getRight();
-	}
-
-	public Node CDDR(Node n) {
-		return n.getRight().getRight();
-	}
-
 	public Node eval(Node n, Map<String, Node> a, Map<String, Node> d) {
 		if (n.getType()==4) {
 			if ((n.getValue().equals("NIL")) || (n.getValue().equals("T")) || (n.getSubType() == 0)) {
@@ -382,4 +358,29 @@ public class MyEvaluate {
 		return true;
 	}
 
+	public Node CAR(Node n) {
+		return n.getLeft();
+	}
+	
+	public Node CDR(Node n) {
+		return n.getRight();
+	}
+	
+	public Node CAAR(Node n) {
+		return n.getLeft().getLeft();
+	}
+	
+	public Node CADR(Node n) {
+		return n.getRight().getLeft();
+	}
+	
+	public Node CDAR(Node n) {
+		return n.getLeft().getRight();
+	}
+	
+	public Node CDDR(Node n) {
+		return n.getRight().getRight();
+	}
 }
+
+

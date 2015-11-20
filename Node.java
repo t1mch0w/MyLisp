@@ -2,6 +2,7 @@ public class Node {
 	private Node left, right, parent;
 	private int type;
 	private int subType; // 0 means Int, 1 means String
+	private int nat;
 	private String value;
 	private String result;
 	private boolean isList = false;
@@ -114,4 +115,11 @@ public class Node {
 				return false;
 				}
 		}
+
+	public int getNat() {
+		return nat;
+	}
+	public void setNat(int nat) {
+		this.nat = nat;
+	}
 }

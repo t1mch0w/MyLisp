@@ -135,4 +135,112 @@ public class MyScanner {
 	public ArrayList<String> getList() {
 		return scanList;
 	}
+
+	// New function typeCheck
+	// 0:Nature 1:Bool 2:List(Nature)
+
+	public boolean typeCheck(Node n) {
+		if (n.getType()==4) {
+			if (n.getSubType()==0) {
+				n.setNat(0);
+			}
+			else if (n.getSubType()==1) {
+				if (n.getValue().equals("T")) {
+					n.setNat(1);
+				}
+				else if (n.getValue().equals("F")) {
+					n.setNat(1);
+				}
+				else if (n.getValue().equals("NIL")) {
+					n.setNat(2);
+				}
+				else {
+					// Error Information
+				}
+			}
+			return true;
+		}
+		// Start Loop for Type Evaluate
+		else {
+			if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("CAR"))) {
+				if (typeCheck(CAR(CDR(n))) && (typeCheck(CDR(CDR(n))))) {
+					if (CAR(n).getNat()==2
+					n.setNat(0);
+				}
+				else {
+				}
+			}
+			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("CDR"))) {
+				if (typeCheck(CAR(CDR(n))) && (typeCheck(CDR(CDR(n))))) {
+					n.setNat(2);
+				}
+				else {
+				}
+			}
+			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("CONS"))) {
+				if (typeCheck(CAR(CDR(n))) && (typeCheck(CDR(CDR(n))))) {
+					n.setNat(2);
+				}
+				else {
+				}
+			}
+			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("ATOM"))) {
+				if (typeCheck(CAR(CDR(n))) && (typeCheck(CDR(CDR(n))))) {
+					n.setNat(1);
+				}
+				else {
+				}
+			}
+			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("EQ"))) {
+				if (typeCheck(CAR(CDR(n))) && (typeCheck(CDR(CDR(n))))) {
+					n.setNat(1);
+				}
+				else {
+				}
+			}
+			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("NULL"))) {
+				if (typeCheck(CAR(CDR(n))) && (typeCheck(CDR(CDR(n))))) {
+					n.setNat(1);
+				}
+				else {
+				}
+			}
+			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("INT"))) {
+				if (typeCheck(CAR(CDR(n))) && (typeCheck(CDR(CDR(n))))) {
+					n.setNat(1);
+				}
+				else {
+				}
+			}
+			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("PLUS"))) {
+				if (typeCheck(CAR(CDR(n))) && (typeCheck(CDR(CDR(n))))) {
+					n.setNat(0);
+				}
+				else {
+				}
+			}
+			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("LESS"))) {
+				if (typeCheck(CAR(CDR(n))) && (typeCheck(CDR(CDR(n))))) {
+					n.setNat(1);
+				}
+				else {
+				}
+			}
+			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("COND"))) {
+				if (typeCheck(CAR(CDR(n))) && (typeCheck(CDR(CDR(n))))) {
+					n.setNat(0);
+				}
+				else {
+				}
+			}
+			else {
+				typeCheck(CAR(CDR(n)));
+				typeCheck(CDR(CDR(n)));
+			}
+		}
+	}
+
+	public boolean isNatList(Node n) {
+		if 
+	}
 }

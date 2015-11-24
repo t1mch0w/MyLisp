@@ -1,34 +1,39 @@
-(DEFUN . (A . ((X . NIL) . ((PLUS . (X . (10 . NIL))) . NIL))))
-(A . (10 . NIL))
-(DEFUN . (MEM . ((X . (LIST . NIL)) . ((COND . (((NULL . (LIST . NIL)) . (NIL . NIL)) . ((T . ((COND . (((EQ . (X . ((CAR . (LIST . NIL)) . NIL))) . (T . NIL)) . ((T . ((MEM . (X . ((CDR . (LIST . NIL)) . NIL))) . NIL)) . NIL))) . NIL)) . NIL))) . NIL))))
-(DEFUN . (UNI . ((S1 . (S2 . NIL)) . ((COND . (((NULL . (S1 . NIL)) . (S2 . NIL)) . (((NULL . (S2 . NIL)) . (S1 . NIL)) . ((T . ((COND . (((MEM . ((CAR . (S1 . NIL)) . (S2 . NIL))) . ((UNI . ((CDR . (S1 . NIL)) . (S2 . NIL))) . NIL)) . ((T . ((CONS . ((CAR . (S1 . NIL)) . ((UNI . ((CDR . (S1 . NIL)) . (S2 . NIL))) . NIL))) . NIL)) . NIL))) . NIL)) . NIL)))) . NIL))))
-(UNI . ((QUOTE . ((3 . (4 . (2 . NIL))) . NIL)) . ((QUOTE . ((3 . (5 . (1 . (4 . NIL)))) . NIL)) . NIL)))
-(DEFUN . (MEM . ((X . (LIST . NIL)) . ((COND . (((NULL . (LIST . NIL)) . (NIL . NIL)) . ((T . ((COND . (((EQ . (X . ((CAR . (LIST . NIL)) . NIL))) . (T . NIL)) . ((T . ((MEM . (X . ((CDR . (LIST . NIL)) . NIL))) . NIL)) . NIL))) . NIL)) . NIL))) . NIL))))
-(MEM . (3 . ((QUOTE . ((2 . (3 . (4 . NIL))) . NIL)) . NIL)))
-(MEM . (5 . ((QUOTE . ((2 . (3 . (4 . NIL))) . NIL)) . NIL)))
-(MEM . (T . ((QUOTE . ((2 . (3 . (4 . NIL))) . NIL)) . NIL)))
-(DEFUN . (MEM . ((X . (LIST . NIL)) . ((COND . (((NULL . (LIST . NIL)) . (NIL . NIL)) . ((T . ((COND . (((EQ . (X . ((CAR . (LIST . NIL)) . NIL))) . (T . NIL)) . ((T . ((MEM . (X . ((CDR . (LIST . NIL)) . NIL))) . NIL)) . NIL))) . NIL)) . NIL))) . NIL))))
-(DEFUN . (UNI . ((S1 . (S2 . NIL)) . ((COND . (((NULL . (S1 . NIL)) . (S2 . NIL)) . (((NULL . (S2 . NIL)) . (S1 . NIL)) . ((T . ((COND . (((MEM . ((CAR . (S1 . NIL)) . (S2 . NIL))) . ((UNI . ((CDR . (S1 . NIL)) . (S2 . NIL))) . NIL)) . ((T . ((CONS . ((CAR . (S1 . NIL)) . ((UNI . ((CDR . (S1 . NIL)) . (S2 . NIL))) . NIL))) . NIL)) . NIL))) . NIL)) . NIL)))) . NIL))))
-(UNI . ((QUOTE . ((3 . (4 . (2 . NIL))) . NIL)) . ((QUOTE . ((3 . (5 . (1 . (4 . NIL)))) . NIL)) . NIL)))
-(UNI . ((QUOTE . ((1 . (2 . (3 . NIL))) . NIL)) . ((QUOTE . ((1 . (2 . (3 . (4 . NIL)))) . NIL)) . NIL)))
-(DEFUN . (F . ((X . (Y . NIL)) . ((PLUS . (X . (Y . NIL))) . NIL))))
-(DEFUN . (G . ((Y . NIL) . ((PLUS . ((F . (10 . (5 . NIL))) . (Y . NIL))) . NIL))))
-(G . (5 . NIL))
-(G . ((G . (5 . NIL)) . NIL))
-(CONS . ((QUOTE . (A . NIL)) . ((QUOTE . ((B . (C . NIL)) . NIL)) . NIL)))
-(COND . (((QUOTE . (NIL . NIL)) . (23 . NIL)) . ((T . ((CONS . (5 . (6 . NIL))) . NIL)) . NIL)))
+(CAR . (NIL. NIL))
 
-(DEFUN . (MEM . ((X . (LIST . NIL)) . ((COND . (((NULL . (LIST . NIL)) . (NIL . NIL)) . ((T . ((COND . (((EQ . (X . ((CAR . (LIST . NIL)) . NIL))) . (T . NIL)) . ((T . ((MEM . (X . ((CDR . (LIST . NIL)) . NIL))) . NIL)) . NIL))) . NIL)) . NIL))) . NIL))))
-(DEFUN . (H . (NIL . ((PLUS . (1 . (1 . NIL))) . NIL))))
-(MEM . (3 . ((QUOTE . ((2 . (3 . (4 . NIL))) . NIL)) . NIL)))
-(MEM . (5 . ((QUOTE . ((2 . (3 . (4 . NIL))) . NIL)) . NIL)))
-(MEM . (T . ((QUOTE . ((2 . (3 . (4 . NIL))) . NIL)) . NIL)))
-(DEFUN . (MEM . ((X . (LIST . NIL)) . ((COND . (((NULL . (LIST . NIL)) . (NIL . NIL)) . ((T . ((COND . (((EQ . (X . ((CAR . (LIST . NIL)) . NIL))) . (T . NIL)) . ((T . ((MEM . (X . ((CDR . (LIST . NIL)) . NIL))) . NIL)) . NIL))) . NIL)) . NIL))) . NIL))))
-(DEFUN . (UNI . ((S1 . (S2 . NIL)) . ((COND . (((NULL . (S1 . NIL)) . (S2 . NIL)) . (((NULL . (S2 . NIL)) . (S1 . NIL)) . ((T . ((COND . (((MEM . ((CAR . (S1 . NIL)) . (S2 . NIL))) . ((UNI . ((CDR . (S1 . NIL)) . (S2 . NIL))) . NIL)) . ((T . ((CONS . ((CAR . (S1 . NIL)) . ((UNI . ((CDR . (S1 . NIL)) . (S2 . NIL))) . NIL))) . NIL)) . NIL))) . NIL)) . NIL)))) . NIL))))
-(UNI . ((QUOTE . ((3 . (4 . (2 . NIL))) . NIL)) . ((QUOTE . ((3 . (5 . (1 . (4 . NIL)))) . NIL)) . NIL)))
-(UNI . ((QUOTE . ((1 . (2 . (3 . NIL))) . NIL)) . ((QUOTE . ((1 . (2 . (3 . (4 . NIL)))) . NIL)) . NIL)))
-(DEFUN . (F . ((X . (Y . NIL)) . ((PLUS . (X . (Y . NIL))) . NIL))))
-(DEFUN . (G . ((Y . NIL) . ((PLUS . ((F . (10 . (5 . NIL))) . (Y . NIL))) . NIL))))
-(G . (5 . NIL))
-(G . ((G . (5 . NIL)) . NIL))
-(H . NIL)
+(CAR . ((CDR . ((CONS . (5 . (NIL . NIL))) . NIL)) . NIL))
+
+(CDR . (NIL. NIL))
+
+(CONS . (5. (NIL. NIL)))
+
+(ATOM . (5. NIL))
+(ATOM . (NIL. NIL))
+(ATOM . ((CONS . (5. (NIL. NIL))) . NIL))
+
+(EQ . (5 . (3. NIL)))
+
+(EQ . ((CAR . ((CDR . ((CONS . (5 . (NIL . NIL))) . NIL)) . NIL)) . (3 . NIL)))
+
+(NULL . (NIL . NIL))
+
+(NULL . ((CONS . (5 . (NIL . NIL))) . NIL)) 
+
+(INT . (NIL. NIL))
+
+(INT . (3.NIL))
+
+(INT . ((CONS . (5 . (NIL . NIL))) . NIL))
+
+(PLUS . (5 . (3 . NIL)))
+
+(PLUS . ( (CAR . ((CDR . ((CONS . (5 . (NIL . NIL))) . NIL)) . NIL)) . (3 . NIL)))
+
+(LESS . (5 . (3 . NIL)))
+
+(LESS . ( (CAR . ((CDR . ((CONS . (5 . (NIL . NIL))) . NIL)) . NIL)) . (3 . NIL)))
+
+(COND . ((T . (T . NIL)) . ((T . (T . NIL)) . NIL)))
+
+(COND . ((F . (5 . NIL)) . ((T . (3 . NIL)) . NIL)))
+
+(COND . ((F . (5 . NIL)) . ((T . ((CAR . ((CDR . ((CONS . (5 . (NIL . NIL))) . NIL)) . NIL)) . NIL)) . NIL)))

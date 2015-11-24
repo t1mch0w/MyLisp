@@ -136,6 +136,11 @@ public class MyScanner {
 		return scanList;
 	}
 
+
+	public void showError() {
+		System.out.println("ERROR: Violate the Inference Rules.");
+		System.exit(-1);
+	}
 	// New function typeCheck
 	// 0:Nature 1:Bool 2:List(Nature)
 
@@ -144,7 +149,7 @@ public class MyScanner {
 			if (n.getSubType()==0) {
 				n.setNat(0);
 			}
-			else if (n.getSubType()==1) {
+			else {
 				if (n.getValue().equals("T")) {
 					n.setNat(1);
 				}
@@ -156,173 +161,174 @@ public class MyScanner {
 				}
 				else {
 					// Error Information
+					showError();
 				}
 			}
 			return true;
 		}
 		// Start Loop for Type Evaluate
 		else {
-			if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("CAR"))) {
+			if ((n.getLeft().getType()==4) && (n.getLeft().getValue().equals("CAR"))) {
 				if (typeCheck(CDR(n))) {
 					if (checkList(CADR(n))) {
 						n.setNat(0);
 					}
 					else {
 						// Error Information
+						showError();
 					}
 				}
 				else {
+					// Error Information
+					showError();
 				}
 			}
-			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("CDR"))) {
+			else if ((n.getLeft().getType()==4) && (n.getLeft().getValue().equals("CDR"))) {
 				if (typeCheck(CDR(n))) {
-					if ((CADR(n).getNat()==0) && (checkList(CAR(CDDR(n))))) {
+					if (checkList(CADR(n))) {
 						n.setNat(2);
 					}
 					else {
 						// Error Information
+						showError();
 					}
 				}
 				else {
+					// Error Information
+					showError();
 				}
 			}
-			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("CONS"))) {
+			else if ((n.getLeft().getType()==4) && (n.getLeft().getValue().equals("CONS"))) {
 				if (typeCheck(CDR(n))) {
 					n.setNat(2);
 				}
 				else {
+					// Error Information
+					showError();
 				}
 			}
-			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("ATOM"))) {
+			else if ((n.getLeft().getType()==4) && (n.getLeft().getValue().equals("ATOM"))) {
 				if (typeCheck(CDR(n))) {
 					n.setNat(1);
 				}
 				else {
+					// Error Information
+					showError();
 				}
 			}
-			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("EQ"))) {
+			else if ((n.getLeft().getType()==4) && (n.getLeft().getValue().equals("EQ"))) {
 				if (typeCheck(CDR(n))) {
 					if ((CADR(n).getNat()==0) && (CAR(CDDR(n)).getNat()==0)) {
 						n.setNat(1);
 					}
 					else {
 						// Error Information
+						showError();
 					}
 				}
 			}
-			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("NULL"))) {
+			else if ((n.getLeft().getType()==4) && (n.getLeft().getValue().equals("NULL"))) {
 				if (typeCheck(CDR(n))) {
 					if (checkList(CADR(n))) {
 						n.setNat(1);
 					}
 					else {
 						// Error Information
+						showError();
 					}
 				}
 			}
-			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("INT"))) {
-				if (typeCheck(CDR(n))) {
-					if (checkList(CADR(n))) {
-						n.setNat(1);
-					}
-					else {
-						// Error Information
-					}
-				}
-			}
-			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("INT"))) {
+			else if ((n.getLeft().getType()==4) && (n.getLeft().getValue().equals("INT"))) {
 				if (typeCheck(CDR(n))) {
 					n.setNat(1);
 				}
-				else {
-				}
 			}
-			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("PLUS"))) {
+			else if ((n.getLeft().getType()==4) && (n.getLeft().getValue().equals("PLUS"))) {
 				if (typeCheck(CDR(n))) {
 					if ((CADR(n).getNat()==0) && (CAR(CDDR(n)).getNat()==0)) {
 						n.setNat(0);
 					}
 					else {
 						// Error Information
+						showError();
 					}
 				}
 				else {
+					// Error Information
+					showError();
 				}
 			}
-			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("LESS"))) {
+			else if ((n.getLeft().getType()==4) && (n.getLeft().getValue().equals("LESS"))) {
 				if (typeCheck(CDR(n))) {
 					if ((CADR(n).getNat()==0) && (CAR(CDDR(n)).getNat()==0)) {
 						n.setNat(1);
 					}
 					else {
 						// Error Information
+						showError();
 					}
 				}
 				else {
+					// Error Information
+					showError();
 				}
 			}
-			else if ((n.getLeft().getType()==4) || (n.getLeft().getValue().equals("COND"))) {
+			else if ((n.getLeft().getType()==4) && (n.getLeft().getValue().equals("COND"))) {
 				if (typeCheck(CDR(n))) {
 					if (checkCond(CDR(n))) {
 						n.setNat(CADR(CADR(n)).getNat());
 					}
 					else {
+						// Error Information
+						showError();
 					}
 				}
 				else {
+					// Error Information
+					showError();
 				}
 			}
 			else {
-				typeCheck(CAR(CDR(n)));
-				typeCheck(CDR(CDR(n)));
+				if (CAR(n)!=null) {
+					typeCheck(CAR(n));
+				}
+				if (CDR(n)!=null) {
+					typeCheck(CDR(n));
+				}
 			}
 		}
 		return true;
 	}
 
 	public boolean checkList(Node n) {
-		if (n.getType()==4) {
-			if (n.getNat()==2) {
-				return true;
-			}
-			else {
-				return false;
-			}
+		if (n.getNat()==2) {
+			return true;
 		}
-		while (!n.getValue().equals("NIL")) {
-			if (CDR(n)!=null) {
-				if (CAR(n).getNat()!=0) {
-					return false;
-				}
-				n=CDR(n);
-			}
-			else {
-				//Error Information
-			}
+		else {
+			return false;
 		}
-		return true;
 	}
 
 	public boolean checkCond(Node n) {
-		int s1 = CAR(CADR(n)).getNat();
-		int s2 = CADR(CADR(n)).getNat();
+		int s1 = CAR(CAR(n)).getNat();
+		int s2 = CADR(CAR(n)).getNat();
 		if (s1!=1) {
 			return false;
 		}
-		Node m = new Node(0);
+
+		Node m = CDR(n);
 		
-		while (!n.getValue().equals("NIL")) {
-			m = CDR(n);	
-			int s3 = CAR(CADR(m)).getNat();
-			int s4 = CADR(CADR(m)).getNat();
+		while (!m.getValue().equals("NIL")) {
+			int s3 = CAR(CAR(m)).getNat();
+			int s4 = CADR(CAR(m)).getNat();
 			if ((s1==s3) && (s2 == s4)) {
 			}
 			else {
 				return false;
 			}
-			n = CDR(n);
+			m = CDR(m);
 		}
-		return false;
+		return true;
 	}
 
 
@@ -350,4 +356,3 @@ public class MyScanner {
 		return n.getRight().getRight();
 	}
 }
-

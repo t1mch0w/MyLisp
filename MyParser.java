@@ -22,8 +22,9 @@ public class MyParser {
 				break;
 			}
 			a = new HashMap<String, Node>();
-			Node newNode = me.eval(start, a, d);
-			//Node newNode = start;
+			//Node newNode = me.eval(start, a, d);
+			Node newNode = start;
+			ms.typeCheck(start);
 			evaluate(newNode);
 			printer(newNode, judge(newNode));
 			System.out.println();

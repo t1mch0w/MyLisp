@@ -1,4 +1,4 @@
-CSE 6341 Project 3
+CSE 6341 Project 4
 
 1. Name: Fang Zhou
 
@@ -14,7 +14,11 @@ CSE 6341 Project 3
   B. MyScanner.java: The code in this file is used to accept the input
      from the users. In this part, this class checks the legality of 
      each element in the input. The code also provides an important
-     function 'getNextToken', which is called by MyParser class
+     function 'getNextToken', which is called by MyParser class.
+     For Proj4, I add a function called typeChecker() function and 
+     in the main function, I make the evaluate() function become comments.
+     So for Proj4, the program just to test the inference in the code
+     and show the code in the Proj1's way.
   C. MyParser.java: MyParser is responsible for building the binary
      tree, evaulating if the node is a list, and printing the results
      to the standard output. It also includes some bugs detection code.

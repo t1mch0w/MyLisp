@@ -199,8 +199,15 @@ public class MyScanner {
 				}
 			}
 			else if ((n.getLeft().getType()==4) && (n.getLeft().getValue().equals("CONS"))) {
+
 				if (typeCheck(CDR(n))) {
-					n.setNat(2);
+					if ((CADR(n).getNat()==0) && (CAR(CDDR(n)).getNat()==2)) {
+						n.setNat(2);
+					}
+					else {
+						// Error Information
+						showError();
+					}
 				}
 				else {
 					// Error Information

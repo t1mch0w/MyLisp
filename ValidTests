@@ -1,39 +1,33 @@
 (CAR . (NIL. NIL))
-
 (CAR . ((CDR . ((CONS . (5 . (NIL . NIL))) . NIL)) . NIL))
 
 (CDR . (NIL. NIL))
 
 (CONS . (5. (NIL. NIL)))
 
+
 (ATOM . (5. NIL))
 (ATOM . (NIL. NIL))
 (ATOM . ((CONS . (5. (NIL. NIL))) . NIL))
 
 (EQ . (5 . (3. NIL)))
-
 (EQ . ((CAR . ((CDR . ((CONS . (5 . (NIL . NIL))) . NIL)) . NIL)) . (3 . NIL)))
 
 (NULL . (NIL . NIL))
-
 (NULL . ((CONS . (5 . (NIL . NIL))) . NIL)) 
+(NULL . ((CDR . (NIL . NIL)). NIL))
 
 (INT . (NIL. NIL))
-
 (INT . (3.NIL))
-
 (INT . ((CONS . (5 . (NIL . NIL))) . NIL))
 
 (PLUS . (5 . (3 . NIL)))
-
 (PLUS . ( (CAR . ((CDR . ((CONS . (5 . (NIL . NIL))) . NIL)) . NIL)) . (3 . NIL)))
 
 (LESS . (5 . (3 . NIL)))
-
 (LESS . ( (CAR . ((CDR . ((CONS . (5 . (NIL . NIL))) . NIL)) . NIL)) . (3 . NIL)))
 
 (COND . ((T . (T . NIL)) . ((T . (T . NIL)) . NIL)))
-
 (COND . ((F . (5 . NIL)) . ((T . (3 . NIL)) . NIL)))
-
 (COND . ((F . (5 . NIL)) . ((T . ((CAR . ((CDR . ((CONS . (5 . (NIL . NIL))) . NIL)) . NIL)) . NIL)) . NIL)))
+(COND . (((ATOM . (NIL. NIL)) . (5 . NIL)) . ((T . (0 . NIL)) . NIL)))
